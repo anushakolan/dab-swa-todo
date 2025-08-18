@@ -10,11 +10,11 @@
   "routes": [
    {
     "route": "/api/*",
-    "rewrite": "http://74.179.59.89:5000/api/*"
+    "rewrite": "http://74.179.59.89:5000/*"
    },
    {
     "route": "/rest/*",
-    "rewrite": "http://74.179.59.89:5000/rest/*"
+    "rewrite": "http://74.179.59.89:5000/*"
    }
   ],
   "runtime": {
