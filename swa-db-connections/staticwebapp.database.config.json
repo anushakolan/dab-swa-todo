@@ -30,7 +30,7 @@
     },
     "host": {
       "cors": {
-        "origins": ["https://yellow-mushroom-000457a0f.2.azurestaticapps.net"],
+        "origins": [*"],
         "allow-credentials": true
       },
       "authentication": {
