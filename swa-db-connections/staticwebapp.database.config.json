@@ -24,8 +24,8 @@
     },
     "host": {
       "cors": {
-        "origins": [],
-        "allow-credentials": false
+        "origins": ["https://yellow-mushroom-000457a0f.2.azurestaticapps.net"],
+        "allow-credentials": true
       },
       "authentication": {
         "provider": "StaticWebApps"
