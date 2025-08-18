@@ -47,7 +47,7 @@
 <script lang="js">
 import UserInfo from './UserInfo.vue'
 
-const API = "/data-api/rest/todo";
+const API = "/rest/todo";
 const HEADERS = { 'Accept': 'application/json', 'Content-Type': 'application/json;charset=utf-8' };
 
 var filters = {
