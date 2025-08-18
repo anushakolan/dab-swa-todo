@@ -11,6 +11,24 @@ on:
       - main
 
 jobs:
+  jobs:
+  build_and_deploy:
+    steps:
+      # ... previous steps
+      - name: Install sqlpackage
+        run: |
+          wget https://aka.ms/sqlpackage-linux -O sqlpackage.zip
+          unzip sqlpackage.zip -d sqlpackage
+          sudo cp sqlpackage/sqlpackage /usr/local/bin/
+          sudo chmod +x /usr/local/bin/sqlpackage
+
+      # Step that uses sqlpackage
+      - name: Deploy Database
+        env:
+          SQL_USER: ${{ secrets.DB_USER }}
+          SQL_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        run: |
+          sqlpackage /Action:Publish /TargetConnectionString:"Server=anushakolan-test.database.windows.net;User ID=$SQL_USER;Password=$SQL_PASSWORD;Database=master;" /SourceFile:database/TodoDB/bin/Release/TodoDB.dacpac /p:DropObjectsNotInSource=false
   build_and_deploy_job:
     if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
