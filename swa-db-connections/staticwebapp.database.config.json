@@ -1,13 +1,83 @@
 {
-  "$schema": "https://aka.ms/staticwebapp.database.config.schema",
-  "connection": {
-    "type": "rest",
-    "location": "https://your-dab-app.azurewebsites.net"
+  "$schema": "https://github.com/Azure/data-api-builder/releases/download/v0.9.7/dab.draft.schema.json",
+  "data-source": {
+    "database-type": "mssql",
+    "connection-string": "Server=localhost;Database=TodoDB;User ID=todo_dab_user;Password=rANd0m_PAzzw0rd!;Encrypt=True;TrustServerCertificate=True;",
+    "options": {
+      "set-session-context": false
+    }
   },
-  "authentication": {
-    "clientPrincipalMapping": {
-      "userId": "userId",
-      "roles": "roles"
+  "routes": {
+    "route": "/api/*",
+    "rewrite": "http://74.179.59.89:5000/api/*"
+  },
+  "runtime": {
+    "rest": {
+      "enabled": true,
+      "path": "/rest",
+      "request-body-strict": true
+    },
+    "graphql": {
+      "enabled": true,
+      "path": "/graphql",
+      "allow-introspection": true
+    },
+    "host": {
+      "cors": {
+        "origins": [],
+        "allow-credentials": false
+      },
+      "authentication": {
+        "provider": "StaticWebApps"
+      },
+      "mode": "development"
+    }
+  },
+  "entities": {
+    "Todo": {
+      "source": {
+        "object": "dbo.todos",
+        "type": "table",
+        "key-fields": []
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Todo",
+          "plural": "Todos"
+        }
+      },
+      "rest": {
+        "enabled": true,
+        "path": "/todo"
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "policy": {
+                "database": "@item.owner_id eq 'public'"
+              }
+            }
+          ]
+        },
+        {
+          "role": "authenticated",
+          "actions": [
+            {
+              "action": "*",
+              "policy": {
+                "database": "@item.owner_id eq @claims.userId"
+              }
+            }
+          ]
+        }
+      ],
+      "mappings": {
+        "position": "order"
+      }
     }
   }
 }
