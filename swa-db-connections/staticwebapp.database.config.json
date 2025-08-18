@@ -7,14 +7,16 @@
       "set-session-context": false
     }
   },
-  "routes": {
+  "routes": [
+   {
     "route": "/api/*",
     "rewrite": "http://74.179.59.89:5000/api/*"
-  },
-  {
-  "route": "/rest/*",
-  "rewrite": "http://74.179.59.89:5000/rest/*"
-  },
+   },
+   {
+    "route": "/rest/*",
+    "rewrite": "http://74.179.59.89:5000/rest/*"
+   }
+  ],
   "runtime": {
     "rest": {
       "enabled": true,
